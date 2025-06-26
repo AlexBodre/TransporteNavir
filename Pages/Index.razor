@@ -1,9 +1,409 @@
 ﻿@page "/"
+@using BootstrapBlazor.Components
+@using System.ComponentModel.DataAnnotations
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Transporte Navir - Movilidad Segura y Confiable</PageTitle>
 
-<h1>Hello, world!</h1>
+<style>
+    /* Carousel styling */
+.carousel {
+    margin-top: 80px; /* Adjust for fixed header */
+}
 
-Welcome to your new app.
+.carousel-item {
+    height: 500px;
+    background-color: #777;
+    position: relative; /* Add this line */
+}
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Remove position: absolute, top, left, min-height if not needed */
+}
+
+.carousel-caption {
+    background-color: rgba(0, 43, 89, 0.7);
+    padding: 20px;
+    border-radius: 5px;
+    bottom: 100px;
+}
+
+/* Responsive adjustments */
+@@media (max-width: 768px) {
+    .carousel-item,
+    .carousel-item img {
+        height: 400px;
+        min-height: 400px;
+    }
+}
+
+@@media (max-width: 576px) {
+    .carousel-item,
+    .carousel-item img {
+        height: 300px;
+        min-height: 300px;
+    }
+    
+    .carousel-caption {
+        display: none !important;
+    }
+}
+    :root {
+        --navir-blue: #002b59;
+        --navir-teal: #00b9be;
+        --navir-dark-blue: #005e8c;
+        --navir-light-teal: #9ff4e5;
+        --white: #ffffff;
+    }
+    
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        color: var(--navir-blue);
+        line-height: 1.6;
+    }
+    
+    .header {
+        background-color: var(--navir-blue);
+        color: var(--white);
+        padding: 1rem 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .logo {
+        font-weight: bold;
+        font-size: 1.8rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        line-height: 1;
+    }
+    
+    .logo-top {
+        color: var(--navir-light-teal);
+    }
+    
+    .logo-bottom {
+        color: var(--navir-teal);
+    }
+    
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+    
+    .hero {
+        background: linear-gradient(135deg, var(--navir-blue) 0%, var(--navir-dark-blue) 100%);
+        color: var(--white);
+        padding: 8rem 0 4rem;
+        text-align: center;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .hero p {
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto 2rem;
+    }
+    
+    .btn {
+        display: inline-block;
+        background-color: var(--navir-teal);
+        color: var(--navir-blue);
+        padding: 0.8rem 1.8rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+        background-color: var(--navir-light-teal);
+        transform: translateY(-3px);
+    }
+    
+    .services {
+        padding: 4rem 0;
+        background-color: var(--white);
+    }
+    
+    .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+        color: var(--navir-blue);
+        position: relative;
+    }
+    
+    .section-title:after {
+        content: "";
+        display: block;
+        width: 80px;
+        height: 4px;
+        background: var(--navir-teal);
+        margin: 1rem auto;
+    }
+    
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+    
+    .service-card {
+        background-color: var(--white);
+        border: 1px solid #e1e1e1;
+        border-radius: 8px;
+        padding: 2rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 91, 140, 0.1);
+        border-top: 4px solid var(--navir-teal);
+    }
+    
+    .service-icon {
+        font-size: 3rem;
+        color: var(--navir-teal);
+        margin-bottom: 1rem;
+    }
+    
+    .service-list {
+        list-style: none;
+        padding: 0;
+        text-align: left;
+    }
+    
+    .service-list li {
+        margin-bottom: 0.8rem;
+        position: relative;
+        padding-left: 1.8rem;
+    }
+    
+    .service-list li:before {
+        content: "✓";
+        color: var(--navir-teal);
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+    }
+    
+    .safety {
+        padding: 4rem 0;
+        background-color: var(--navir-light-teal);
+    }
+    
+    .contact {
+        padding: 4rem 0;
+        background-color: var(--navir-dark-blue);
+        color: var(--white);
+    }
+    
+    footer {
+        background-color: var(--navir-blue);
+        color: var(--white);
+        padding: 2rem 0;
+        text-align: center;
+    }
+    
+    @@media (max-width: 768px) {
+        .hero {
+            padding: 6rem 0 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <span class="logo-top">TRANSPORTE</span>
+            <span class="logo-bottom">NAVIR</span>
+        </div>
+    </div>
+</header>
+
+<Carousel IsFade="true" Interval="5000" Width="100%" Height="500px" ShowControls="false" ShowIndicators="true">
+    <CarouselItem>
+            <img src="/images/transporte-escolar.png" class="d-block w-100" alt="Transporte escolar">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Transporte Escolar Seguro</h5>
+                <p>Garantizamos el traslado confiable de sus hijos</p>
+            </div>
+    </CarouselItem>
+    <CarouselItem>
+            <img src="/images/transporte-turistico.png" class="d-block w-100" alt="Transporte turístico">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Transporte Turístico</h5>
+                <p>Comodidad y seguridad para sus viajes</p>
+            </div>
+    </CarouselItem>
+    <CarouselItem>
+            <img src="/images/transporte-empleados.png" class="d-block w-100" alt="Transporte de empleados">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Transporte Corporativo</h5>
+                <p>Soluciones de movilidad para su empresa</p>
+            </div>
+    </CarouselItem>
+</Carousel>
+
+<section class="services">
+    <div class="container">
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🚌</div>
+                <h3>Transporte Escolar</h3>
+                <ul class="service-list">
+                    <li>Rutas personalizadas</li>
+                    <li>Asistentes capacitados</li>
+                    <li>Vehículos equipados con seguridad</li>
+                </ul>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">🏨</div>
+                <h3>Transporte Turístico</h3>
+                <ul class="service-list">
+                    <li>Excursiones y paseos</li>
+                    <li>Viajes empresariales</li>
+                    <li>Unidades con amenities</li>
+                    <li>Guías profesionales</li>
+                </ul>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">👔</div>
+                <h3>Transporte de Empleados</h3>
+                <ul class="service-list">
+                    <li>Rutas corporativas</li>
+                    <li>Horarios flexibles</li>
+                    <li>Servicio puerta a puerta</li>
+                    <li>Reportes de asistencia</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="safety">
+    <div class="container">
+        <h2 class="section-title">Nuestros Compromisos</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3><i class="fas fa-shield-alt"></i> Seguridad</h3>
+                <p>Vehículos equipados con los más altos estándares de seguridad y conductores certificados.</p>
+            </div>
+            <div class="service-card">
+                <h3><i class="fas fa-clock"></i> Puntualidad</h3>
+                <p>Cumplimiento estricto de horarios para garantizar la confiabilidad de nuestros servicios.</p>
+            </div>
+            <div class="service-card">
+                <h3><i class="fas fa-heart"></i> Comodidad</h3>
+                <p>Unidades diseñadas para brindar la mejor experiencia durante el viaje.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="contact" id="contact">
+    <div class="container">
+        <h2 class="section-title">Solicitar Cotización</h2>
+        <div style="max-width: 600px; margin: 0 auto;">
+            <EditForm Model="@contactForm" OnValidSubmit="@HandleSubmit">
+                <DataAnnotationsValidator />
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <InputText id="name" @bind-Value="contactForm.Name" class="form-control" />
+                    <ValidationMessage For="@(() => contactForm.Name)" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <InputText id="email" @bind-Value="contactForm.Email" class="form-control" />
+                    <ValidationMessage For="@(() => contactForm.Email)" />
+                </div>
+                <div class="form-group">
+                    <label for="phone">Teléfono</label>
+                    <InputText id="phone" @bind-Value="contactForm.Phone" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="service">Servicio de Interés</label>
+                    <InputSelect id="service" @bind-Value="contactForm.Service" class="form-control">
+                        <option value="">Seleccione un servicio</option>
+                        <option value="escolar">Transporte Escolar</option>
+                        <option value="turístico">Transporte Turístico</option>
+                        <option value="empleados">Transporte de Empleados</option>
+                    </InputSelect>
+                </div>
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <InputTextArea id="message" @bind-Value="contactForm.Message" class="form-control" rows="5" />
+                </div>
+                <button type="submit" class="btn">Enviar Solicitud</button>
+            </EditForm>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="logo" style="margin-bottom:1rem;">
+            <span class="logo-top">TRANSPORTE</span>
+            <span class="logo-bottom">NAVIR</span>
+        </div>
+        <p>© @DateTime.Now.Year Transporte Navir. Todos los derechos reservados.</p>
+        <p><i class="fas fa-phone"></i> +1 234 567 8900 | <i class="fas fa-envelope"></i> info@transportenavir.com</p>
+        <p><i class="fas fa-map-marker-alt"></i> Av. Logística 1234, Zona Industrial, Ciudad</p>
+    </div>
+</footer>
+
+@code {
+    private ContactForm contactForm = new ContactForm();
+
+    private async Task HandleSubmit()
+    {
+        if (contactForm.IsValid())
+        {
+            // Aquí puedes agregar la lógica para enviar el formulario, como una API o un servicio de correo.
+            await Task.Delay(500); // Simulación de envío
+            contactForm = new ContactForm(); // Resetea el formulario después del envío
+        }
+    }
+
+    public class ContactForm
+    {
+        [Required(ErrorMessage = "El nombre es obligatorio.")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "El email es obligatorio.")]
+        [EmailAddress(ErrorMessage = "El email no es válido.")]
+        public string Email { get; set; }
+
+        public string Phone { get; set; }
+
+        public string Service { get; set; }
+
+        [Required(ErrorMessage = "El mensaje es obligatorio.")]
+        public string Message { get; set; }
+
+        public bool IsValid() => !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Message);
+    }
+}
